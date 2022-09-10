@@ -10,7 +10,7 @@ Tutustuin aluksi kurssin materiaaliin, kuten aikatauluun, tehtäviin ja valmiisi
 En vielä ole aloittanut ohjelman toteuttamista.
 
 ## Mitä opin tällä viikolla / tänään?
-Ehdin hieman tutustumaan siihen, missä Markovin ketjuja voidaan hyödyntää sekä myös teoreettisesti niiden toimintaan.
+Ehdin tutustumaan siihen, missä Markovin ketjuja voidaan hyödyntää sekä myös hieman niiden toimintaan teoreettisella tasolla.
 
 ## Mitä teen seuraavaksi?
 Ajattelin miettiä syvemmin, kuinka aion toteuttaa määrittelydokumentissa kuvatun ohjelman.
