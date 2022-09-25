@@ -87,7 +87,7 @@ for note in notes:
       duration=randrange(2,4),
       volume=randrange(70, 100)
     )
-    current_beat += randrange(0, 3)
+    current_beat += randrange(0, 4)
 
 
 # Write it to disk as wave file
