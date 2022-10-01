@@ -28,7 +28,7 @@ mf.addTempo(midi_track, time, bpm)
 starting_note = librosa.midi_to_note(data.tracks[1][1].note)
 current_note = starting_note
 
-# Insert MIDI notes into Trie data structure
+# Insert MIDI notes into Trie data structure as bigrams
 for track in data.tracks:
     for message in track:
         if message.type == 'note_on':
@@ -44,7 +44,7 @@ def predict_next_note(note):
     for key in count_appearance.keys():
         count_appearance[key] = count_appearance[key]/len(T.search(note))
 
-    # create list of possible options for the next chord
+    # create list of possible options for the next note
     options = [key.split('-')[1] for key in count_appearance.keys()]
     
     # create  list of probability distribution
