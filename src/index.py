@@ -56,11 +56,11 @@ def predict_next_note(note):
 
 def generate_sequence(note, n):
     """Generate sequence of n length"""
-    notes = []
+    sequence = []
     for i in range(n):
-        notes.append(predict_next_note(note))
-        note = notes[-1]
-    return notes
+        sequence.append(predict_next_note(note))
+        note = sequence[-1]
+    return sequence
 
 # n equals the length of the sequence
 n = 30
