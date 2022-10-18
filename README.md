@@ -12,4 +12,4 @@ Tämän jälkeen projektin juurikansiion luodaan generoitu MIDI-tiedosto ``outpu
 Testit suorittaa antamalla komennon ``poetry run pytest`` projektin juuressa.  
 
 # Testikattavuus
-Testikattavuuden voi tarkistaa antamalla komennon ``poetry run pytest --cov --cov-report=html:docs tests/`` projektin juuressa, joka jälkeen raportti luodaan ``docs`` kansioon.  
+Testikattavuuden voi tarkistaa antamalla komennon ``poetry run pytest --cov --cov-report=html:docs tests/`` projektin juuressa, jonka jälkeen testikattavuusraportti luodaan ``docs`` kansioon.  
