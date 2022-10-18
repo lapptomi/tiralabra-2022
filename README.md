@@ -2,6 +2,7 @@
 
 ## [Määrittelydokumentti](https://github.com/lapptomi/tiralabra-2022/blob/main/dokumentaatio/maarittelydokumentti.md)  
 ## [Viikkoraportit](https://github.com/lapptomi/tiralabra-2022/blob/main/dokumentaatio/viikkoraportit/viikkoraportti1.md)
+## [Testikattavuus](https://lapptomi.github.io/tiralabra-2022/)
 
 # Ohjelman suoritus
 Ohjelman voi suorittaa antamalla komennon ``poetry run python3 src/index.py`` projektin juuressa.  
