@@ -9,7 +9,7 @@ Ohjelman voi suorittaa antamalla komennon ``poetry run python3 src/index.py`` pr
 Tämän jälkeen projektin juurikansiion luodaan generoitu MIDI-tiedosto ``output.mid``, joka sisältää automaattisesti tuotetun musiikin, jonka voi toistaa erilaisilla DAW-ohjelmilla, tai verkossa esimerkiksi [Online Sequencerilla](https://onlinesequencer.net/import).
 
 # Testaus
-Testit suorittaa antamalla komennon ``poetry run pytest`` projektin juuressa.  
+Testit voidaan suorittaa antamalla komennon ``poetry run pytest`` projektin juuressa.  
 
 # Testikattavuus
 Testikattavuuden voi tarkistaa antamalla komennon ``poetry run pytest --cov --cov-report=html:docs tests/`` projektin juuressa, jonka jälkeen testikattavuusraportti luodaan ``docs`` kansioon.  
