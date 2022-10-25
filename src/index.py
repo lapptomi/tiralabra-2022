@@ -1,3 +1,4 @@
+from datetime import datetime
 from Trie import trie
 import librosa
 from mido import MidiFile
@@ -10,6 +11,7 @@ T = trie.Trie()
 
 def predict_next_note(note, channel):
     """Predict next note based on current state"""
+
     bigrams_with_current_note = dict((bigram, appereance) for bigram, appereance in T.search(note))
     bigrams_with_current_channel = {
         bigram.split('/')[0] : count 
@@ -115,15 +117,20 @@ def write_midi_to_disk(sequences):
     # Write it to disk
     with open('output.mid', 'wb') as output:
         midi_file.writeFile(output)
-    print('MIDI-file "output.mid" generated successfully!')
+
+    print('\nMIDI-file "output.mid" generated successfully!')
 
 def main():
     file_name = input('\nEnter the name of the MIDI-file to use as a training data: ')
+    data = MidiFile(file_name)
     length_of_sequence = int(input('Enter the length of the sequence to generate, for example 30: '))
 
-    data = MidiFile(file_name)
+    start_time = datetime.now()
     generated_sequence = generate_from_midi(data, length_of_sequence)
     write_midi_to_disk(generated_sequence)
+    end_time = datetime.now()
+
+    print(f'Duration (hour:minute:second): {end_time - start_time}')
 
 if __name__ == "__main__":
     main()

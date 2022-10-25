@@ -7,3 +7,7 @@ coverage.xml
 __pycache__
 *.py[cod]
 *$py.class
+
+test.mid
+test2.mid
+test3.mid

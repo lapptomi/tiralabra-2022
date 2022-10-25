@@ -13,7 +13,7 @@ def test_generated_sequence_lengths():
         assert len(sequence) == lenght_of_sequence_2
 
     # Test another MIDI-file
-    data2 = MidiFile('bbk.mid')
+    data2 = MidiFile('bb-king.mid')
     for channel, sequence in generate_from_midi(data2, lenght_of_sequence_1):
         assert len(sequence) == lenght_of_sequence_1
 
