@@ -130,7 +130,7 @@ def main():
     write_midi_to_disk(generated_sequence)
     end_time = datetime.now()
 
-    print(f'Duration (hour:minute:second): {end_time - start_time}')
+    print(f'Duration (hour:minute:second.ms): {end_time - start_time}')
 
 if __name__ == "__main__":
     main()
