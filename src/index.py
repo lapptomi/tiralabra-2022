@@ -7,40 +7,36 @@ import numpy as np
 from random import randrange
 import functools
 
-T = trie.Trie()
+Trie = trie.Trie()
 
 def predict_next_note(note, channel):
-    """Predict next note based on current state"""
+    """Predict next note based on the N previous notes"""
 
-    bigrams_with_current_note = dict((bigram, appereance) for bigram, appereance in T.search(note))
-    bigrams_with_current_channel = {
-        bigram.split('/')[0] : count 
-            for bigram, count in bigrams_with_current_note.items() if bigram.split('/')[1] == channel
-    }
+    ngrams_with_current_note = dict((ngram, appereance) for ngram, appereance in Trie.search(f'channel{channel}/{note}'))
 
-    if len(bigrams_with_current_channel) == 0:
+    if len(ngrams_with_current_note) == 0:
         return None
 
-    appereance = functools.reduce(lambda a, b: a + b, bigrams_with_current_channel.values())
+    appereance = functools.reduce(lambda a, b: a + b, ngrams_with_current_note.values())
 
     # Convert apperance into probabilities
-    for bigram in bigrams_with_current_channel.keys():
-        bigrams_with_current_channel[bigram] = bigrams_with_current_channel[bigram] / appereance
+    for bigram in ngrams_with_current_note.keys():
+        ngrams_with_current_note[bigram] = ngrams_with_current_note[bigram] / appereance
 
     # Create list of possible options for the next note
-    options = [bigram.split('-')[1] for bigram in bigrams_with_current_channel.keys()]
+    options = [ngram.split('/')[1].split('-')[-1] for ngram in ngrams_with_current_note.keys()]
     
     # Create list of probability distribution
-    probabilities = list(bigrams_with_current_channel.values())
+    probabilities = list(ngrams_with_current_note.values())
 
     # Return random prediction
     return np.random.choice(options, p=probabilities)
 
-def generate_sequence(note, channel, n):
+def generate_sequence(note, channel, length_of_seq):
     """Generate sequence of n length"""
     sequence = []
 
-    for i in range(n):
+    for i in range(length_of_seq):
         next_note = predict_next_note(note, channel)
         if next_note == None:
             # Break if there is no next note to move from the current one
@@ -50,7 +46,7 @@ def generate_sequence(note, channel, n):
             note = sequence[-1]
     return sequence
 
-def generate_from_midi(data, length):
+def generate_from_midi(data, length_of_seq, n):
     """Generate sequence by using MIDI-file as a training data"""
 
     starting_notes = []
@@ -65,23 +61,24 @@ def generate_from_midi(data, length):
             if message.type == 'note_on':
                 if message.channel not in added_channels:
                     # Add the starting notes for every channel
-                    starting_notes.append(f'{librosa.midi_to_note(message.note)}/{message.channel}')
+                    starting_notes.append(f'{librosa.midi_to_note(message.note, unicode=False)}/{message.channel}')
                     added_channels.append(message.channel)
-                channels[str(message.channel)].append(librosa.midi_to_note(message.note))
+                channels[str(message.channel)].append(librosa.midi_to_note(message.note, unicode=False))
 
-    # Insert the notes into Trie as bigrams
+    # Insert the notes into Trie as Ngram
     for channel, seq in channels.items():
-        if len(seq) < 2:
-            # Pass if there is less than two notes in the sequence
+        if len(seq) < n:
+            # Pass if there is less than N notes in the sequence
             pass
-        for index in range(1, len(seq)-1):
-            T.insert(f'{seq[index-1]}-{seq[index]}/{channel}')
-    
+        for i in range(n-1, len(seq)):
+            ngram = '-'.join(seq[i-(n-1):i+1])
+            Trie.insert(f'channel{channel}/{ngram}')
+
     generated_sequences = []
     # Generate sequences for every channel
     for obj in starting_notes:
         note, channel = obj.split('/')
-        generated_sequences.append((channel, generate_sequence(note, channel, length)))
+        generated_sequences.append((channel, generate_sequence(note, channel, length_of_seq)))
 
     return generated_sequences
 
@@ -101,7 +98,7 @@ def write_midi_to_disk(sequences):
     current_beat = 0
 
     # Add notes to the MIDI tracks
-    for channel, sequence in sorted(sequences):
+    for channel, sequence in sequences:
         for note in sequence:
             midi_file.addNote(
                 track=int(channel),
@@ -114,22 +111,25 @@ def write_midi_to_disk(sequences):
             current_beat += randrange(1, 8)
         current_beat = 0
     
-    # Write it to disk
+    # Write MIDI to disk
     with open('output.mid', 'wb') as output:
         midi_file.writeFile(output)
-
+        
     print('\nMIDI-file "output.mid" generated successfully!')
 
 def main():
     file_name = input('\nEnter the name of the MIDI-file to use as a training data: ')
     data = MidiFile(file_name)
     length_of_sequence = int(input('Enter the length of the sequence to generate, for example 30: '))
+    degree = int(input('Enter the degree of Markov chain: '))
 
     start_time = datetime.now()
-    generated_sequence = generate_from_midi(data, length_of_sequence)
-    write_midi_to_disk(generated_sequence)
-    end_time = datetime.now()
 
+    generated_sequences = sorted(generate_from_midi(data, length_of_sequence, degree))
+
+    write_midi_to_disk(generated_sequences)
+    end_time = datetime.now()
+    
     print(f'Duration (hour:minute:second.ms): {end_time - start_time}')
 
 if __name__ == "__main__":

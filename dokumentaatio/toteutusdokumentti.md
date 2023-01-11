@@ -7,11 +7,8 @@ Ohjelman toiminnallisuus on pääasiassa toteutettu tiedostoon *index.py*, mutta
 ### Aikavaativuus
 Ohjelma kokonaisuudessaan toimii ajassa *O(n^3)*, sillä generoidessa sekvennsit jokaiselle MIDI-raidalle vie hieman enemmän aikaa, kuin esimerkiksi vain yhdelle raidalle.
 
-### Tilavaativuus
----
-
 ## Työn mahdolliset puutteet ja parannusehdotukset  
 Tällä hetkellä ohjelma lukee vain käytetyt nuotit opetusdatana käytettävän MIDI-tiedoston jokaiselta raidalta, jota käytetään sekvennsien generoimiseen, mutta yksi parannusehdotus olisi esimerkiksi hyödyntää myös MIDI-tiedoston käytettyjen nuottien kestoa sekä äänenvoimakkuutta. Tämä kuitenkin lisäisi työn vaativuutta paljon, joten tällä hetkellä näihin liittyen luodaan vain satunnaiset muuttujat Pythonin *randrange*-funktiota hyödyntäen MIDI-tiedostoa luodessa, jotta saadaan hieman vaihtelevuutta luotuun musiikkiin.
 
 ## Lähteet
----
+https://www.geeksforgeeks.org/trie-insert-and-search/  
