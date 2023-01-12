@@ -121,12 +121,10 @@ def main():
     file_name = input('\nEnter the name of the MIDI-file to use as a training data: ')
     data = MidiFile(file_name)
     length_of_sequence = int(input('Enter the length of the sequence to generate, for example 30: '))
-    degree = int(input('Enter the degree of Markov chain: '))
+    degree = int(input('Enter the degree of Markov chain, for example 2-5: '))
 
     start_time = datetime.now()
-
     generated_sequences = sorted(generate_from_midi(data, length_of_sequence, degree))
-
     write_midi_to_disk(generated_sequences)
     end_time = datetime.now()
     
