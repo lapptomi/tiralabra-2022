@@ -1,6 +1,6 @@
 ##  Aineopintojen harjoitustyö: Tietorakenteet ja algoritmit ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 
-## Markov Chain Music Generator
+# Markov Chain Music Generator
 Ohjelman tarkoituksena on tuottaa automaattisesti musiikkia Markovin ketjuja hyödyntäen. Ohjelmalle annetaan opetusdatana mikä tahansa MIDI-tiedosto, jonka jälkeen tätä tietoa käyttäen luodaan uusi MIDI-tiedosto ``output.mid``, joka sisältää generoidun musiikin.
 
 # Ohjelman suoritus  
